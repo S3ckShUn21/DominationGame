@@ -1,5 +1,7 @@
 import processing.core.PApplet;
 
+import java.util.Objects;
+
 public abstract class Node {
 
     // Allows to use processing functions
@@ -34,7 +36,7 @@ public abstract class Node {
         double distXFromCenter = this._world.mouseX - this._x;
         double distYFromCenter = this._world.mouseY - this._y;
 
-        return Math.sqrt( Math.pow(distXFromCenter,2) + Math.pow(distYFromCenter, 2)) < this._r;
+        return Math.sqrt(Math.pow(distXFromCenter, 2) + Math.pow(distYFromCenter, 2)) < this._r;
     }
 
     // Gives a basic output color based on the "owner" of the node
@@ -50,6 +52,20 @@ public abstract class Node {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Node node = (Node) o;
+        return _x == node._x &&
+                _y == node._y &&
+                _r == node._r &&
+                Objects.equals(_world, node._world) &&
+                _color == node._color;
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(_world, _x, _y, _r, _color);
+    }
 }

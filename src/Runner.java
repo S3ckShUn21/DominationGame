@@ -13,6 +13,8 @@ public class Runner extends PApplet {
     // All three types
     private ArrayList<Node> nodes = new ArrayList<>();
 
+    private ArrayList<Edge> edges = new ArrayList<>();
+
     // Runs the processing main method
     public static void main(String[] args) {
         PApplet.main("Runner");
@@ -34,9 +36,10 @@ public class Runner extends PApplet {
 
     // Run all the time
     public void draw() {
-        // Draw each node
-        nodes.forEach(Node::show);
         // Draw each edge
+        edges.forEach(Edge::show);
+        // Draw each node after the edges because we want these to show on top of the edge lines
+        nodes.forEach(Node::show);
     }
 
     public void mouseClicked() {
