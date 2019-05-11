@@ -5,7 +5,7 @@
 .idea/**/dictionaries
 .idea/**/shelf
 .idea/inspectionProfiles/
-./idea/**/uiDesigner.xml
+.idea/uiDesigner.xml
 
 # Generated files
 .idea/**/contentModel.xml

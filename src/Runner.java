@@ -1,6 +1,11 @@
+import Graph.Edge;
+import Graph.Node;
+import Graph.Village;
+import Input.InputHandler;
+import Utilities.NodeState;
+import Utilities.Util;
 import processing.core.PApplet;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -9,6 +14,9 @@ public class Runner extends PApplet {
 
     // Used to generate all random numbers
     private Random rand = new Random();
+
+    // This holds all the buttons, and deals with them being clicked
+    InputHandler inputHandler = new InputHandler();
 
     // Background of all the nodes which will be on the screen
     // All three types
@@ -57,9 +65,11 @@ public class Runner extends PApplet {
         edges.forEach(Edge::show);
         // Draw each node after the edges because we want these to show on top of the edge lines
         nodes.forEach(Node::show);
+
     }
 
     public void mouseClicked() {
+        inputHandler.run();
         // Runs through each of the Nodes
         for (Node n : nodes) {
             // If THIS node was clicked then change ITS color specifically

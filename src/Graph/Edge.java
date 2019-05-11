@@ -1,3 +1,5 @@
+package Graph;
+
 public class Edge {
 
     private Node _start;
