@@ -52,6 +52,10 @@ public abstract class Node {
         }
     }
 
+    public boolean withinRadius(Node n, int radius) {
+        return Util.distance(this._x, this._y, n.get_x(), n.get_y()) < radius;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,5 +71,17 @@ public abstract class Node {
     @Override
     public int hashCode() {
         return Objects.hash(_world, _x, _y, _r, _color);
+    }
+
+    public int get_x() {
+        return _x;
+    }
+
+    public int get_y() {
+        return _y;
+    }
+
+    public int get_r() {
+        return _r;
     }
 }

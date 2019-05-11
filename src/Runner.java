@@ -1,5 +1,6 @@
 import processing.core.PApplet;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -15,6 +16,8 @@ public class Runner extends PApplet {
 
     private ArrayList<Edge> edges = new ArrayList<>();
 
+    private int overlapRadius = 100;
+
     // Runs the processing main method
     public static void main(String[] args) {
         PApplet.main("Runner");
@@ -23,14 +26,28 @@ public class Runner extends PApplet {
     // Run before setup
     // Creates window
     public void settings() {
-        size(800, 800);
+        fullScreen();
     }
 
     // Run once before draw
     public void setup() {
         // Adds ten nodes to screen
-        for (int i = 0; i < 10; i++) {
-            nodes.add(new Village(this, rand.nextInt(width), rand.nextInt(height)));
+        int numToAdd = 60;
+        while (numToAdd >= 0) {
+            int tempX = rand.nextInt(width);
+            int tempY = rand.nextInt(height);
+
+            // Checks to see if this node i
+            boolean add = true;
+            for (Node n : nodes) {
+                if (Util.distance(tempX, tempY, n.get_x(), n.get_y()) < overlapRadius) {
+                    add = false;
+                }
+            }
+            if (add) {
+                nodes.add(new Village(this, tempX, tempY));
+                numToAdd--;
+            }
         }
     }
 
@@ -46,7 +63,7 @@ public class Runner extends PApplet {
         // Runs through each of the Nodes
         for (Node n : nodes) {
             // If THIS node was clicked then change ITS color specifically
-            if( n.clicked() ) {
+            if (n.clicked()) {
                 n.changeColor(NodeState.RED);
             }
         }
