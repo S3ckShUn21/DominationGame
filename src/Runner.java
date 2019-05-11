@@ -1,4 +1,5 @@
 import Graph.Edge;
+import Graph.Graph;
 import Graph.Node;
 import Graph.Village;
 import Input.InputHandler;
@@ -22,7 +23,7 @@ public class Runner extends PApplet {
     // All three types
     private ArrayList<Node> nodes = new ArrayList<>();
 
-    private ArrayList<Edge> edges = new ArrayList<>();
+    private Graph map;
 
     private int overlapRadius = 100;
 
@@ -39,7 +40,41 @@ public class Runner extends PApplet {
 
     // Run once before draw
     public void setup() {
-        // Adds ten nodes to screen
+
+        map = new Graph(this, 60, 20, 250);
+
+        // Adds sixty nodes to screen
+        fillMap();
+    }
+
+    // Run all the time
+    public void draw() {
+        background(170);
+        map.show();
+    }
+
+    public void mouseClicked() {
+        inputHandler.run();
+        // Runs through each of the Nodes
+        for (Node n : map.get_nodes()) {
+            // If THIS node was clicked then change ITS color specifically
+            if (n.clicked()) {
+                n.changeColor(NodeState.RED);
+            }
+        }
+    }
+
+    public void keyPressed() {
+        if( key == 'r' ) {
+            map.reset();
+
+            // Adds sixty nodes to screen
+            fillMap();
+
+        }
+    }
+
+    private void fillMap() {
         int numToAdd = 60;
         while (numToAdd >= 0) {
             int tempX = rand.nextInt(width);
@@ -47,36 +82,20 @@ public class Runner extends PApplet {
 
             // Checks to see if this node i
             boolean add = true;
-            for (Node n : nodes) {
+            for (Node n : map.get_nodes()) {
                 if (Util.distance(tempX, tempY, n.get_x(), n.get_y()) < overlapRadius) {
                     add = false;
                 }
             }
             if (add) {
-                nodes.add(new Village(this, tempX, tempY));
+                map.addNode(new Village(this, tempX, tempY));
                 numToAdd--;
             }
         }
-    }
 
-    // Run all the time
-    public void draw() {
-        // Draw each edge
-        edges.forEach(Edge::show);
-        // Draw each node after the edges because we want these to show on top of the edge lines
-        nodes.forEach(Node::show);
+//        System.out.println(map.get_nodes().size());
 
-    }
-
-    public void mouseClicked() {
-        inputHandler.run();
-        // Runs through each of the Nodes
-        for (Node n : nodes) {
-            // If THIS node was clicked then change ITS color specifically
-            if (n.clicked()) {
-                n.changeColor(NodeState.RED);
-            }
-        }
+        map.connectNodes();
     }
 
 }

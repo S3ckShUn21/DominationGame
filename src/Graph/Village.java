@@ -1,6 +1,7 @@
 package Graph;
 
 import Graph.Node;
+import Utilities.NodeState;
 import processing.core.PApplet;
 
 public class Village extends Node {
@@ -17,6 +18,13 @@ public class Village extends Node {
         _world.strokeWeight(3);
         _world.fill(nodeRGBColor());
         _world.circle(this._x, this._y, this._r);
+
+        if( _color == NodeState.RED ){
+            _world.strokeWeight(0);
+            _world.stroke(0x00000000);
+            _world.fill(0x5500aa00);
+            _world.circle(this._x, this._y, 500);
+        }
     }
 
 }
