@@ -12,3 +12,6 @@
 
 # IntelliJ
 out/
+
+# Temporary don't look at the resources until I figure out how to display the formulas
+res/

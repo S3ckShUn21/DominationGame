@@ -1,4 +1,3 @@
-import Graph.Edge;
 import Graph.Graph;
 import Graph.Node;
 import Graph.Village;
@@ -6,6 +5,7 @@ import Input.InputHandler;
 import Utilities.NodeState;
 import Utilities.Util;
 import processing.core.PApplet;
+import processing.core.PShape;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,7 +23,11 @@ public class Runner extends PApplet {
     // All three types
     private ArrayList<Node> nodes = new ArrayList<>();
 
+    private PShape integral;
+
     private Graph map;
+
+    private int borderSize = 50;
 
     private int overlapRadius = 100;
 
@@ -43,6 +47,8 @@ public class Runner extends PApplet {
 
         map = new Graph(this, 60, 20, 250);
 
+        integral = loadShape("res/killme.svg");
+
         // Adds sixty nodes to screen
         fillMap();
     }
@@ -51,6 +57,7 @@ public class Runner extends PApplet {
     public void draw() {
         background(170);
         map.show();
+        shape(integral, 100, 100, 50, 50);
     }
 
     public void mouseClicked() {
@@ -77,8 +84,8 @@ public class Runner extends PApplet {
     private void fillMap() {
         int numToAdd = 60;
         while (numToAdd >= 0) {
-            int tempX = rand.nextInt(width);
-            int tempY = rand.nextInt(height);
+            int tempX = rand.nextInt(width - (borderSize*2)) + borderSize;
+            int tempY = rand.nextInt(height - (borderSize*2)) + borderSize;
 
             // Checks to see if this node i
             boolean add = true;

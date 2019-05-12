@@ -35,8 +35,8 @@ public class Graph {
     public void connectNodes() {
         for (Node n : _nodes) {
             List<Node> closeNodes = getNodesInRadius(n, _nodeConnectionRadius);
-            // The plus 1 makes sure it has at least ONE connection
-            int numEdgesToAdd = rand.nextInt(closeNodes.size()) + 1;
+            // The plus 2 makes sure it DOES have connections
+            int numEdgesToAdd = rand.nextInt(closeNodes.size()) + 2;
             // Now here is where stuff gets weird
             // If I wanted to not overlap any edges, or many any duplicates then I would add in a
             // lot more code to check for that.
