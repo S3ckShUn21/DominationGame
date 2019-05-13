@@ -12,3 +12,6 @@
 
 # IntelliJ
 out/
+
+# Temporary
+res/

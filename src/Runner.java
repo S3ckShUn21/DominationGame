@@ -1,7 +1,10 @@
 import Graph.Edge;
 import Graph.Node;
 import Graph.Village;
+import Input.Button;
 import Input.InputHandler;
+import Utilities.ActionState;
+import Utilities.ColorState;
 import Utilities.NodeState;
 import Utilities.Util;
 import processing.core.PApplet;
@@ -15,8 +18,14 @@ public class Runner extends PApplet {
     // Used to generate all random numbers
     private Random rand = new Random();
 
+    private ActionState actionState = ActionState.NONE;
+    private ColorState colorState = ColorState.NONE;
+
     // This holds all the buttons, and deals with them being clicked
     InputHandler inputHandler = new InputHandler();
+
+    // Create the buttons
+    private Button red, blue, guard, village, fortress, castle;
 
     // Background of all the nodes which will be on the screen
     // All three types
@@ -57,6 +66,23 @@ public class Runner extends PApplet {
                 numToAdd--;
             }
         }
+
+        red = new Button(this, 500, 500, 60, 40, 0xffbb0000) {
+            @Override
+            public void onClick() {
+                colorState = ColorState.RED;
+            }
+        };
+
+        blue = new Button(this, width / 2, height - (height / 4), 100, 50, 0xff0000bb) {
+            @Override
+            public void onClick() {
+                colorState = ColorState.BLUE;
+            }
+        };
+
+        inputHandler.addButton(red);
+        inputHandler.addButton(blue);
     }
 
     // Run all the time
@@ -65,7 +91,8 @@ public class Runner extends PApplet {
         edges.forEach(Edge::show);
         // Draw each node after the edges because we want these to show on top of the edge lines
         nodes.forEach(Node::show);
-
+        // Draw GUI over top of everything
+        inputHandler.show();
     }
 
     public void mouseClicked() {
@@ -77,6 +104,9 @@ public class Runner extends PApplet {
                 n.changeColor(NodeState.RED);
             }
         }
+        System.out.println("Action State: " + actionState);
+        System.out.println("Color State: " + colorState);
+        System.out.println();
     }
 
 }
