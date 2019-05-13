@@ -29,6 +29,8 @@ public class Runner extends PApplet {
 
     private int borderSize = 50;
 
+    private int bottomBorder = 200;
+
     private int overlapRadius = 100;
 
     // Runs the processing main method
@@ -47,7 +49,7 @@ public class Runner extends PApplet {
 
         map = new Graph(this, 60, 20, 250);
 
-        integral = loadShape("res/killme.svg");
+//        integral = loadShape("res/killme.svg");
 
         // Adds sixty nodes to screen
         fillMap();
@@ -57,7 +59,7 @@ public class Runner extends PApplet {
     public void draw() {
         background(170);
         map.show();
-        shape(integral, 100, 100, 50, 50);
+//        shape(integral, 100, 100, 50, 50);
     }
 
     public void mouseClicked() {
@@ -85,7 +87,7 @@ public class Runner extends PApplet {
         int numToAdd = 60;
         while (numToAdd >= 0) {
             int tempX = rand.nextInt(width - (borderSize*2)) + borderSize;
-            int tempY = rand.nextInt(height - (borderSize*2)) + borderSize;
+            int tempY = rand.nextInt(height - bottomBorder) + borderSize;
 
             // Checks to see if this node i
             boolean add = true;
