@@ -121,13 +121,21 @@ public class Runner extends PApplet {
     }
 
     public void keyPressed() {
+        //Reset
         if (key == 'r') {
             map.reset();
 
             // Adds sixty nodes to screen
             fillMap();
-
         }
+        // Check if connected graph
+//        else if ( key == 'c') {
+//            if( map.isFullyConnected() ) {
+//                guard.setText("Yes");
+//            } else {
+//                guard.setText("No");
+//            }
+//        }
     }
 
     private void fillMap() {

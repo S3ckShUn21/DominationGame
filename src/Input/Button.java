@@ -47,5 +47,9 @@ public abstract class Button {
         return _world.mouseX > _x && _world.mouseX < _x + _w && _world.mouseY > _y && _world.mouseY < _y + _h;
     }
 
+    public void setText(String newText) {
+        _text = newText;
+    }
+
     public abstract void onClick();
 }

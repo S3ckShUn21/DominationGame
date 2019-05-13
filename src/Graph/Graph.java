@@ -4,9 +4,8 @@ import Utilities.Util;
 import processing.core.PApplet;
 
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
 
 public class Graph {
 
@@ -98,5 +97,50 @@ public class Graph {
     public void reset() {
         _nodes = new ArrayList<>();
         _edges = new ArrayList<>();
+    }
+
+    //Determines whether or not we need to recreate the graph to get one that is fully connected
+    public boolean isFullyConnected() {
+        // Choose a random Node to start with
+        Node start = _nodes.get(rand.nextInt(_maxNodes));
+
+        //Containers; stack for searching, visited for keeping track
+        Stack<Node> searchStack = new Stack<Node>();
+        HashSet<Node> visited = new HashSet<>();
+
+        // Add starting Node to each list
+        searchStack.push(start);
+        visited.add(start);
+
+        while (!searchStack.isEmpty()) {
+            Node current = searchStack.pop();
+
+            // Get all the edges that contain this specific node
+            ArrayList<Edge> tempEdges = new ArrayList<Edge>();
+            for (Edge e : _edges) {
+                if (e.contains(current)) {
+                    tempEdges.add(e);
+                }
+            }
+
+            // Get all of the nodes at the other side of those edges and throw them into the stack
+            for (Edge e : tempEdges) {
+                Node other = e.otherSide(current);
+                // If we haven't already seen this node
+                if (!visited.contains(other)) {
+                    // Add it to the 'keep searching' list
+                    searchStack.push(other);
+                    // Say that we have now visited this node so we don't visit it again
+                    visited.add(other);
+                }
+
+            }
+
+            //repeat until it finds all the nodes it can
+
+        }
+
+        return visited.size() == _maxNodes;
+
     }
 }

@@ -20,4 +20,19 @@ public class Edge {
         _world.stroke(0);
         _world.line(_start.get_x(), _start.get_y(), _end.get_x(), _end.get_y());
     }
+
+    // Returns the node which is not the one you give it
+    public Node otherSide(Node n) {
+        if (!contains(n)) {
+            return null;
+        }
+        if (n.equals(_start)) {
+            return _end;
+        }
+        return _start;
+    }
+
+    public boolean contains(Node node) {
+        return node.equals(_start) || node.equals(_end);
+    }
 }
