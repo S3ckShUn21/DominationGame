@@ -7,7 +7,6 @@ import processing.core.PApplet;
 import java.util.Objects;
 
 
-
 public abstract class Node {
 
     // Allows to use processing functions
@@ -20,18 +19,37 @@ public abstract class Node {
     // Who owns the node at the current time
     protected NodeState _color;
 
+    protected boolean _guarded;
+
     public Node(PApplet _world, int x, int y, int r) {
         this._world = _world;
         this._x = x;
         this._y = y;
         this._r = r;
         this._color = NodeState.WHITE;
+        this._guarded = false;
     }
 
     // Will be implemented by Villages, Fortresses, Castles individually
     // Each one should have their own picture
     // Also they will deal with how to show their "guarded" state
     public abstract void show();
+
+    public boolean guard() {
+        if (_guarded) {
+            return false;
+        }
+        _guarded = true;
+        return true;
+    }
+
+    public boolean breakGuard() {
+        if (_guarded) {
+            _guarded = false;
+            return true;
+        }
+        return false;
+    }
 
     public void changeColor(NodeState color) {
         this._color = color;

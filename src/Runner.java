@@ -25,7 +25,7 @@ public class Runner extends PApplet {
     InputHandler inputHandler = new InputHandler();
 
     // Create the buttons
-    private Button red, blue, guard, village, fortress, castle;
+    private Button red, blue, guard, attack, village, fortress, castle;
 
     // Background of all the nodes which will be on the screen
     // All three types
@@ -67,22 +67,39 @@ public class Runner extends PApplet {
             }
         }
 
-        red = new Button(this, 500, 500, 60, 40, 0xffbb0000) {
+        red = new Button(this, width/10, height - 100 , 100, 100, 0xffbb0000, "") {
             @Override
             public void onClick() {
                 colorState = ColorState.RED;
             }
         };
 
-        blue = new Button(this, width / 2, height - (height / 4), 100, 50, 0xff0000bb) {
+        blue = new Button(this, width - (width/10), height - 100, 100, 100, 0xff0000bb, "") {
             @Override
             public void onClick() {
                 colorState = ColorState.BLUE;
             }
         };
 
+        guard = new Button(this, width - (width / 3), height - 100, 200, 100, 0xff777777,
+                "Guard") {
+            @Override
+            public void onClick() {
+                actionState = ActionState.GUARD;
+            }
+        };
+
+        attack = new Button(this, width / 3, height - 100, 200, 100, 0xff777777, "Attack") {
+            @Override
+            public void onClick() {
+                actionState = ActionState.ATTACK;
+            }
+        };
+
         inputHandler.addButton(red);
         inputHandler.addButton(blue);
+        inputHandler.addButton(guard);
+        inputHandler.addButton(attack);
     }
 
     // Run all the time
