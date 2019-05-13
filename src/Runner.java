@@ -1,4 +1,4 @@
-import Graph.Edge;
+import Graph.Graph;
 import Graph.Node;
 import Graph.Village;
 import Input.Button;
@@ -8,6 +8,7 @@ import Utilities.ColorState;
 import Utilities.NodeState;
 import Utilities.Util;
 import processing.core.PApplet;
+import processing.core.PShape;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -31,9 +32,17 @@ public class Runner extends PApplet {
     // All three types
     private ArrayList<Node> nodes = new ArrayList<>();
 
-    private ArrayList<Edge> edges = new ArrayList<>();
+    private PShape integral;
+
+    private Graph map;
+
+    private int borderSize = 50;
+
+    private int bottomBorder = 225;
 
     private int overlapRadius = 100;
+
+    private int buttonBottomHeight = 75;
 
     // Runs the processing main method
     public static void main(String[] args) {
@@ -48,40 +57,29 @@ public class Runner extends PApplet {
 
     // Run once before draw
     public void setup() {
-        // Adds ten nodes to screen
-        int numToAdd = 60;
-        while (numToAdd >= 0) {
-            int tempX = rand.nextInt(width);
-            int tempY = rand.nextInt(height);
 
-            // Checks to see if this node i
-            boolean add = true;
-            for (Node n : nodes) {
-                if (Util.distance(tempX, tempY, n.get_x(), n.get_y()) < overlapRadius) {
-                    add = false;
-                }
-            }
-            if (add) {
-                nodes.add(new Village(this, tempX, tempY));
-                numToAdd--;
-            }
-        }
+        map = new Graph(this, 60, 20, 250);
 
-        red = new Button(this, width/10, height - 100 , 100, 100, 0xffbb0000, "") {
+//        integral = loadShape("res/killme.svg");
+
+        // Adds sixty nodes to screen
+        fillMap();
+
+        red = new Button(this, width / 10, height - buttonBottomHeight, 100, 100, 0xffbb0000, "") {
             @Override
             public void onClick() {
                 colorState = ColorState.RED;
             }
         };
 
-        blue = new Button(this, width - (width/10), height - 100, 100, 100, 0xff0000bb, "") {
+        blue = new Button(this, width - (width / 10), height - buttonBottomHeight, 100, 100, 0xff0000bb, "") {
             @Override
             public void onClick() {
                 colorState = ColorState.BLUE;
             }
         };
 
-        guard = new Button(this, width - (width / 3), height - 100, 200, 100, 0xff777777,
+        guard = new Button(this, width - (width / 3), height - buttonBottomHeight, 200, 100, 0xff777777,
                 "Guard") {
             @Override
             public void onClick() {
@@ -89,7 +87,7 @@ public class Runner extends PApplet {
             }
         };
 
-        attack = new Button(this, width / 3, height - 100, 200, 100, 0xff777777, "Attack") {
+        attack = new Button(this, width / 3, height - buttonBottomHeight, 200, 100, 0xff777777, "Attack") {
             @Override
             public void onClick() {
                 actionState = ActionState.ATTACK;
@@ -104,10 +102,9 @@ public class Runner extends PApplet {
 
     // Run all the time
     public void draw() {
-        // Draw each edge
-        edges.forEach(Edge::show);
-        // Draw each node after the edges because we want these to show on top of the edge lines
-        nodes.forEach(Node::show);
+        background(170);
+        map.show();
+//        shape(integral, 100, 100, 50, 50);
         // Draw GUI over top of everything
         inputHandler.show();
     }
@@ -115,12 +112,46 @@ public class Runner extends PApplet {
     public void mouseClicked() {
         inputHandler.run();
         // Runs through each of the Nodes
-        for (Node n : nodes) {
+        for (Node n : map.get_nodes()) {
             // If THIS node was clicked then change ITS color specifically
             if (n.clicked()) {
                 n.changeColor(NodeState.RED);
             }
         }
+    }
+
+    public void keyPressed() {
+        if (key == 'r') {
+            map.reset();
+
+            // Adds sixty nodes to screen
+            fillMap();
+
+        }
+    }
+
+    private void fillMap() {
+        int numToAdd = 60;
+        while (numToAdd >= 0) {
+            int tempX = rand.nextInt(width - (borderSize * 2)) + borderSize;
+            int tempY = rand.nextInt(height - bottomBorder) + borderSize;
+
+            // Checks to see if this node i
+            boolean add = true;
+            for (Node n : map.get_nodes()) {
+                if (Util.distance(tempX, tempY, n.get_x(), n.get_y()) < overlapRadius) {
+                    add = false;
+                }
+            }
+            if (add) {
+                map.addNode(new Village(this, tempX, tempY));
+                numToAdd--;
+            }
+        }
+
+//        System.out.println(map.get_nodes().size());
+
+        map.connectNodes();
     }
 
 }
