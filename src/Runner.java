@@ -25,7 +25,7 @@ public class Runner extends PApplet {
     InputHandler inputHandler = new InputHandler();
 
     // Create the buttons
-    private Button red, blue, guard, attack, village, fortress, castle;
+    private Button red, blue, guard, attack;
 
     // Background of all the nodes which will be on the screen
     // All three types
@@ -121,9 +121,6 @@ public class Runner extends PApplet {
                 n.changeColor(NodeState.RED);
             }
         }
-        System.out.println("Action State: " + actionState);
-        System.out.println("Color State: " + colorState);
-        System.out.println();
     }
 
 }
