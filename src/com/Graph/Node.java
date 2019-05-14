@@ -1,10 +1,9 @@
-package Graph;
+package com.Graph;
 
-import Utilities.NodeState;
-import Utilities.Util;
+import com.Utilities.NodeState;
+import com.Utilities.Util;
 import processing.core.PApplet;
 
-import java.util.List;
 import java.util.Objects;
 
 

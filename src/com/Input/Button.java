@@ -1,12 +1,11 @@
-package Input;
+package com.Input;
 
+import com.Runner;
+import com.Utilities.Util;
 import processing.core.PApplet;
 import processing.core.PConstants;
-import processing.core.PFont;
 
 public abstract class Button {
-
-    private static PFont buttonFont;
 
     private PApplet _world;
 
@@ -25,8 +24,6 @@ public abstract class Button {
         this._h = _h;
         this._color = _color;
         this._text = _text;
-
-        buttonFont = _world.createFont("res/fonts/OldLondon.ttf", 20);
     }
 
     public void show() {
@@ -38,7 +35,7 @@ public abstract class Button {
 
         _world.textAlign(PConstants.CENTER, PConstants.CENTER);
         _world.fill(0);
-        _world.textFont(buttonFont);
+        _world.textFont(Runner.MEDIEVAL_FONT);
         _world.textSize( _w / 3);
         _world.text(_text, _x, _y - (_w / 25));
     }

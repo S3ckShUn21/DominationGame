@@ -1,7 +1,6 @@
-package Graph;
+package com.Graph;
 
-import Graph.Node;
-import Utilities.NodeState;
+import com.Utilities.NodeState;
 import processing.core.PApplet;
 
 public class Village extends Node {

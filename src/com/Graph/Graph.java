@@ -1,9 +1,8 @@
-package Graph;
+package com.Graph;
 
-import Utilities.Util;
+import com.Utilities.Util;
 import processing.core.PApplet;
 
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 

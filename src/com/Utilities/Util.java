@@ -1,4 +1,4 @@
-package Utilities;
+package com.Utilities;
 
 public class Util {
 

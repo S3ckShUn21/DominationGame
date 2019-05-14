@@ -1,13 +1,17 @@
-import Graph.Graph;
-import Graph.Node;
-import Graph.Village;
-import Input.Button;
-import Input.InputHandler;
-import Utilities.ActionState;
-import Utilities.ColorState;
-import Utilities.NodeState;
-import Utilities.Util;
+package com;
+
+import com.Graph.Fortress;
+import com.Graph.Graph;
+import com.Graph.Node;
+import com.Graph.Village;
+import com.Input.Button;
+import com.Input.InputHandler;
+import com.Utilities.ActionState;
+import com.Utilities.ColorState;
+import com.Utilities.NodeState;
+import com.Utilities.Util;
 import processing.core.PApplet;
+import processing.core.PFont;
 import processing.core.PShape;
 
 import java.util.ArrayList;
@@ -28,10 +32,6 @@ public class Runner extends PApplet {
     // Create the buttons
     private Button red, blue, guard, attack;
 
-    // Background of all the nodes which will be on the screen
-    // All three types
-    private ArrayList<Node> nodes = new ArrayList<>();
-
     private PShape integral;
 
     private Graph map;
@@ -44,9 +44,11 @@ public class Runner extends PApplet {
 
     private int buttonBottomHeight = 75;
 
+    public static PFont MEDIEVAL_FONT;
+
     // Runs the processing main method
     public static void main(String[] args) {
-        PApplet.main("Runner");
+        PApplet.main("com.Runner");
     }
 
     // Run before setup
@@ -57,6 +59,8 @@ public class Runner extends PApplet {
 
     // Run once before draw
     public void setup() {
+
+        MEDIEVAL_FONT = createFont("res/fonts/OldLondon.ttf", 20);
 
         map = new Graph(this, 60, 20, 250);
 
@@ -123,10 +127,10 @@ public class Runner extends PApplet {
     public void keyPressed() {
         //Reset
         if (key == 'r') {
-            map.reset();
-
-            // Adds sixty nodes to screen
-            fillMap();
+            do {
+                map.reset();
+                fillMap();
+            } while( !map.isFullyConnected() );
         }
         // Check if connected graph
 //        else if ( key == 'c') {
@@ -139,7 +143,9 @@ public class Runner extends PApplet {
     }
 
     private void fillMap() {
-        int numToAdd = 60;
+
+        // Create 40 villages
+        int numToAdd = 40;
         while (numToAdd >= 0) {
             int tempX = rand.nextInt(width - (borderSize * 2)) + borderSize;
             int tempY = rand.nextInt(height - bottomBorder) + borderSize;
@@ -153,6 +159,25 @@ public class Runner extends PApplet {
             }
             if (add) {
                 map.addNode(new Village(this, tempX, tempY));
+                numToAdd--;
+            }
+        }
+
+        // Create 20 Fortresses
+        numToAdd = 20;
+        while (numToAdd >= 0) {
+            int tempX = rand.nextInt(width - (borderSize * 2)) + borderSize;
+            int tempY = rand.nextInt(height - bottomBorder) + borderSize;
+
+            // Checks to see if this node i
+            boolean add = true;
+            for (Node n : map.get_nodes()) {
+                if (Util.distance(tempX, tempY, n.get_x(), n.get_y()) < overlapRadius) {
+                    add = false;
+                }
+            }
+            if (add) {
+                map.addNode(new Fortress(this, tempX, tempY));
                 numToAdd--;
             }
         }

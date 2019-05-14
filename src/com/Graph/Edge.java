@@ -1,4 +1,4 @@
-package Graph;
+package com.Graph;
 
 import processing.core.PApplet;
 

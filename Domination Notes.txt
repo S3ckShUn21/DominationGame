@@ -1,7 +1,7 @@
 4 God Questions
 16 Conquest Questions
-20 Graph.Fortress Questions
+20 com.Graph.Fortress Questions
 
 4 Guard Cards
-8 Graph.Village Cards
+8 com.Graph.Village Cards
 8 Conquest Cards
