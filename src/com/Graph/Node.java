@@ -1,5 +1,6 @@
 package com.Graph;
 
+import com.Runner;
 import com.Utilities.NodeState;
 import com.Utilities.Util;
 import processing.core.PApplet;
@@ -68,9 +69,9 @@ public abstract class Node {
         //    Colors are 0xaarrggbb
         switch (this._color) {
             case RED:
-                return 0xffff0000;
+                return Runner.RED_COLOR;
             case BLUE:
-                return 0xff0000ff;
+                return Runner.BLUE_COLOR;
             default:
                 return 0xffffffff;
         }
@@ -107,5 +108,9 @@ public abstract class Node {
 
     public int get_r() {
         return _r;
+    }
+
+    public NodeState getColor() {
+        return _color;
     }
 }

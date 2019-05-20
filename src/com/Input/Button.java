@@ -36,12 +36,12 @@ public abstract class Button {
         _world.textAlign(PConstants.CENTER, PConstants.CENTER);
         _world.fill(0);
         _world.textFont(Runner.MEDIEVAL_FONT);
-        _world.textSize( _w / 3);
+        _world.textSize(_w / 3);
         _world.text(_text, _x, _y - (_w / 25));
     }
 
     public boolean clicked() {
-        return _world.mouseX > _x && _world.mouseX < _x + _w && _world.mouseY > _y && _world.mouseY < _y + _h;
+        return _world.mouseX > _x - (_w / 2) && _world.mouseX < _x + (_w / 2) && _world.mouseY > _y - (_h / 2) && _world.mouseY < _y + (_h / 2);
     }
 
     public void setText(String newText) {
@@ -49,4 +49,12 @@ public abstract class Button {
     }
 
     public abstract void onClick();
+
+    public int get_x() {
+        return _x;
+    }
+
+    public int get_y() {
+        return _y;
+    }
 }
