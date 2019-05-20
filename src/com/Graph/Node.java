@@ -53,7 +53,11 @@ public abstract class Node {
     }
 
     public void changeColor(NodeState color) {
-        this._color = color;
+        if( color == this._color) {
+            this._color = NodeState.WHITE;
+        } else {
+            this._color = color;
+        }
     }
 
     // Determines if the mouse was clicked on them specifically

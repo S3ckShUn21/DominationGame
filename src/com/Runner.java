@@ -44,6 +44,8 @@ public class Runner extends PApplet {
 
     public static int DARK_BLUE_COLOR = 0xff111144;
 
+    private int winPercent = 65;
+
     private int borderSize = 50;
 
     private int bottomBorder = 225;
@@ -124,9 +126,11 @@ public class Runner extends PApplet {
         // Draw GUI over top of everything
         inputHandler.show();
         measurePlayerNodeCount();
+        checkDomination();
     }
 
     public void mouseClicked() {
+        // Actually start check things
         inputHandler.run();
         // Runs through each of the Nodes
         for (Node n : map.get_nodes()) {
@@ -223,5 +227,34 @@ public class Runner extends PApplet {
         //Blue Color
         fill(DARK_BLUE_COLOR);
         text(percentBlue, blue.get_x(), blue.get_y());
+    }
+
+    private void checkDomination() {
+        // Get the total
+        double numNodes = map.get_nodes().size();
+        // Get num of each color
+        double numRed = 0, numBlue = 0;
+        for (Node n : map.get_nodes()) {
+            if (n.getColor() == NodeState.BLUE) {
+                numBlue++;
+            } else if (n.getColor() == NodeState.RED) {
+                numRed++;
+            }
+        }
+        textAlign(CENTER, CENTER);
+        textSize(30);
+        //Check to see if either has passed the win percent amount
+        if (numRed / numNodes * 100 >= winPercent) {
+            //Red Color
+            fill(DARK_RED_COLOR);
+            text(String.format("Red has dominated %d%% of the field", winPercent), width / 2,
+                    height - buttonBottomHeight);
+        } else if (numBlue / numNodes * 100 >= winPercent) {
+            //Blue Color
+            fill(DARK_BLUE_COLOR);
+            text(String.format("Blue has dominated %d%% of the field", winPercent), width / 2,
+                    height - buttonBottomHeight);
+        }
+
     }
 }
